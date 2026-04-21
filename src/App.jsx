@@ -157,9 +157,9 @@ const faqItems = [
 
 
 const metricsData = [
-  { value: 43, suffix: "+", label: "Finalized projects" },
+  { value: 3, suffix: "+", label: "Finalized projects" },
   { value: 94, suffix: "%", label: "Conversion rate improvement" },
-  { value: 14, suffix: "+", label: "Years of experience" },
+  { value: 2, suffix: "+", label: "Years of market experience" },
 ];
 
 const tickerWords = [
