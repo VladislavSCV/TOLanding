@@ -4,164 +4,197 @@ const CTA_PRIMARY = "Запросить пилот";
 const CTA_SECONDARY = "Посмотреть демо";
 const CTA_TERTIARY = "Получить аудит воронки";
 
+const navLinks = [
+  { href: "#kak-rabotaet", label: "Как работает" },
+  { href: "#chto-menyaetsya", label: "Что меняется" },
+  { href: "#ceny", label: "Цены" },
+  { href: "#faq", label: "Вопросы" },
+];
+
 const flowSteps = [
-  { icon: "inspect", title: "Lead enters", text: "Лид приходит из Telegram, VK или формы с сайта." },
-  { icon: "sync", title: "Guided dialog", text: "Диалог идет по playbook, не ломая стиль вашей команды." },
-  { icon: "target", title: "Qualification", text: "Фиксируем сегмент, бюджет, срочность и next best action." },
-  { icon: "bolt", title: "Offer", text: "Даём релевантный оффер и снимаем ключевые возражения." },
-  { icon: "growth", title: "Payment", text: "Дожимаем до предоплаты, синхронизируем статусы в CRM." },
-  { icon: "shield", title: "Action center", text: "Показываем утечки, stuck dialogs и baseline vs uplift." },
+  { icon: "inspect", title: "Лид приходит", text: "Входящий лид попадает из Telegram, VK или формы сайта." },
+  { icon: "sync", title: "Управляемый диалог", text: "Диалог ведется по сценарию и не проваливается между шагами." },
+  { icon: "target", title: "Квалификация", text: "Фиксируем сегмент, срочность и приоритет для команды продаж." },
+  { icon: "bolt", title: "Оффер", text: "Подаем релевантное предложение и снимаем ключевые возражения." },
+  { icon: "growth", title: "Оплата", text: "Доводим до предоплаты и фиксируем этап оплаты в CRM." },
+  { icon: "shield", title: "Кабинет контроля", text: "Видны утечки, проблемные диалоги и эффект пилота по выручке." },
 ];
 
 const leakPoints = [
   {
     icon: "bolt",
-    title: "Late response",
-    text: "Лид не получает быстрый первый ответ и остывает до контакта с менеджером.",
+    title: "Поздний ответ",
+    text: "Лид остывает до первого контакта и платный трафик теряет окупаемость.",
   },
   {
     icon: "iterate",
-    title: "No follow-up",
-    text: "Без системного follow-up диалог обрывается до оффера и оплаты.",
+    title: "Нет повторного контакта",
+    text: "Без повторного касания диалоги обрываются до оффера и оплаты.",
   },
   {
     icon: "target",
-    title: "Weak qualification",
-    text: "Трафик смешивается, приоритеты теряются, команда тратит время на низкий intent.",
+    title: "Слабая квалификация",
+    text: "Менеджеры тратят время на слабые лиды, а сильные лиды теряются.",
   },
   {
     icon: "growth",
-    title: "No payment push",
-    text: "Есть переписка, но нет управляемого перехода к счёту, предоплате и check.",
+    title: "Нет управления оплатой",
+    text: "Есть переписка, но нет контролируемого перехода к счету и чеку.",
   },
 ];
 
 const benefits = [
   {
     icon: "bolt",
-    title: "Fast response SLA",
-    text: "Первый ответ и follow-up без провалов по входящему трафику.",
+    title: "Быстрый ответ по SLA",
+    text: "Первый ответ и повторный контакт происходят без провалов по входящему трафику.",
   },
   {
     icon: "inspect",
-    title: "Revenue leak visibility",
-    text: "Видно, где умирают лиды и какие этапы режут выручку.",
+    title: "Видимость утечек выручки",
+    text: "Понятно, на каком этапе теряются лиды и где режется конверсия.",
   },
   {
     icon: "launch",
-    title: "Payment-ready flow",
-    text: "Диалог доводит до offer и оплаты, а не заканчивается на переписке.",
+    title: "Путь до оплаты",
+    text: "Сценарий ведет к офферу и оплате, а не заканчивается на переписке.",
   },
   {
     icon: "shield",
-    title: "Controlled rollout",
-    text: "Пилот за 48 часов, canary на части трафика и еженедельный value report.",
+    title: "Контролируемый запуск",
+    text: "Пилот за 48 часов, контролируемый запуск и еженедельная отчетность по ценности.",
   },
 ];
 
 const proofItems = [
-  { title: "Baseline vs uplift", text: "Сравнение контрольной и пилотной группы в одном отчёте." },
-  { title: "Revenue leak map", text: "Карта утечек по этапам: response, qualification, offer, payment." },
-  { title: "Stuck dialogs", text: "Список диалогов, где нужен ручной дожим или смена playbook." },
-  { title: "ROI / payback", text: "Отчёт по приросту, стоимости внедрения и сроку окупаемости." },
+  { title: "Baseline vs uplift", text: "Сравнение пилота и контрольной группы по ключевым этапам." },
+  { title: "Карта утечек выручки", text: "Где теряется выручка: ответ, квалификация, оффер или оплата." },
+  { title: "Диалоги для ручного дожима", text: "Список переписок, где нужно подключение менеджера." },
+  { title: "ROI / окупаемость", text: "Видно прирост выручки, затраты и срок возврата инвестиций." },
+];
+
+const featureGroups = [
+  {
+    title: "Что внутри",
+    points: [
+      "Слой выручки для Telegram/VK",
+      "Квалификация и повторный контакт",
+      "Путь до оплаты",
+      "Кабинет контроля и карта утечек",
+    ],
+  },
+  {
+    title: "Операционный контур",
+    points: [
+      "Резервные каналы (VK/MAX)",
+      "Готовность к требованиям РФ",
+      "Запуск за 48 часов",
+      "Синхронизация с CRM без замены стека",
+    ],
+  },
 ];
 
 const launchSteps = [
   {
     icon: "inspect",
-    title: "1. Pack activation",
-    text: "Фиксируем одну вертикаль, один канал и KPI пилота.",
+    title: "1. Активация пакета",
+    text: "Фиксируем вертикаль, канал и KPI пилота.",
   },
   {
     icon: "sync",
-    title: "2. Channel setup",
-    text: "Подключаем Telegram/VK, fallback и правила handoff на оператора.",
+    title: "2. Подключение канала",
+    text: "Настраиваем Telegram/VK и правила передачи менеджеру.",
   },
   {
     icon: "growth",
-    title: "3. Payments + CRM",
-    text: "Связываем оплату, webhooks и синхронизацию с CRM без её замены.",
+    title: "3. Оплата + CRM",
+    text: "Связываем платежный поток, биллинг и статусы в CRM.",
   },
   {
     icon: "iterate",
-    title: "4. Controlled canary",
-    text: "Запускаем на части трафика, сверяем baseline и первые сигналы uplift.",
+    title: "4. Контролируемый canary-запуск",
+    text: "Запускаем на части входящего трафика и проверяем гипотезу.",
   },
   {
     icon: "launch",
-    title: "5. Weekly value report",
-    text: "Каждую неделю показываем, где рост и что нужно поправить в playbook.",
+    title: "5. Еженедельный отчет по ценности",
+    text: "Показываем прирост и план правок на следующую неделю.",
   },
 ];
 
 const pricing = [
   {
-    name: "Pilot",
-    text: "Для бизнеса, который хочет проверить uplift на части лидов.",
+    name: "Пилот",
+    audience: "Для бизнеса, который хочет проверить прирост на части входящих лидов",
     price: "от 300 000 ₽ / пилот",
     cta: CTA_PRIMARY,
-    points: ["1 канал", "Qualification + payment flow", "Controlled pilot with KPI", "Weekly review included"],
+    points: [
+      "Показываем baseline vs uplift",
+      "Фиксируем утечки по этапам",
+      "Доводим до оплаты в одном канале",
+      "Еженедельный отчет по результату",
+    ],
   },
   {
-    name: "Growth",
-    text: "Для команды, которой нужен action center и второй контур оптимизации.",
-    price: "от 550 000 ₽ / мес",
+    name: "Рост",
+    audience: "Для команды, которой нужен кабинет контроля и второй контур оптимизации",
+    price: "от 550 000 ₽ / месяц",
     cta: CTA_PRIMARY,
-    points: ["Action center", "Leak map + attribution", "Второй сценарий дожима", "Baseline vs uplift reporting"],
+    points: [
+      "Ускоряем ответ и повторный контакт",
+      "Снижаем потери в квалификации",
+      "Стабилизируем переход к оплате",
+      "Управляем гипотезами по данным",
+    ],
   },
   {
-    name: "Managed Revenue Layer",
-    text: "Для компаний, где нужен постоянный рост конверсии и стабильность каналов.",
-    price: "от 900 000 ₽ / мес",
+    name: "Сопровождение revenue-слоя",
+    audience: "Для компаний, которым нужен постоянный рост конверсии и стабильность каналов",
+    price: "от 900 000 ₽ / месяц",
     cta: CTA_PRIMARY,
     dark: true,
-    points: ["Playbook optimization", "Channel resilience", "RF compliance package", "Priority ops support"],
+    points: [
+      "Держим каналовый контур стабильным",
+      "Обновляем сценарии по данным",
+      "Поддерживаем платежный цикл и чеки",
+      "Обеспечиваем регулярный прирост выручки",
+    ],
   },
 ];
 
 const faqItems = [
   {
-    question: "How fast can we launch?",
-    answer: "Пилот запускается за 48 часов: подключение канала, playbook, payment flow и canary.",
+    question: "Как быстро можно запуститься?",
+    answer: "Пилот запускается за 48 часов: канал, сценарий, оплата, контролируемый запуск и первый отчет.",
   },
   {
-    question: "Do we replace our CRM?",
-    answer: "Нет. TrustOne работает поверх текущего CRM-стека и синхронизирует статусы сделок.",
+    question: "Вы заменяете нашу CRM?",
+    answer: "Нет. TrustOne работает поверх текущего CRM-стека и синхронизирует этапы сделок.",
   },
   {
-    question: "Do you support pilot-first rollout?",
-    answer: "Да. Стартуем с части трафика и показываем baseline vs uplift до масштабирования.",
+    question: "Поддерживаете запуск сначала через пилот?",
+    answer: "Да. Стартуем с части трафика и масштабируемся только после подтвержденного прироста.",
   },
   {
-    question: "How do you track revenue impact?",
-    answer: "Через воронку этапов, leak map, payment attribution и weekly value report.",
+    question: "Как вы считаете влияние на выручку?",
+    answer: "Через baseline vs uplift, карту утечек, оплату и еженедельный отчет по этапам.",
   },
   {
-    question: "What happens if Telegram delivery fails?",
-    answer: "Срабатывает channel fallback: переводим коммуникацию в VK/MAX и фиксируем событие в отчёте.",
+    question: "Что если доставка сообщений в Telegram ломается?",
+    answer: "Срабатывает резерв по каналам: переключаем коммуникацию в VK/MAX и фиксируем событие.",
   },
   {
-    question: "How do you handle RF payments and checks?",
-    answer: "Подключаем RF-платежи, сверяем вебхуки и выдаём compliance checklist для операционного контура.",
+    question: "Как работает РФ-оплата и чеки?",
+    answer: "Подключаем платежный контур, сверяем вебхуки и ведем операции по пакету комплаенса.",
   },
   {
-    question: "Who takes over when the bot should stop?",
-    answer: "Action center передаёт диалог человеку по правилам handoff и приоритетам выручки.",
+    question: "Когда подключается менеджер?",
+    answer: "При триггерах передачи из кабинета контроля: сложные возражения, срочность, риск оттока.",
   },
   {
-    question: "Do you provide post-launch support?",
-    answer: "Да. Managed Revenue Layer включает постоянный мониторинг, QA и обновления playbook.",
+    question: "Есть ли поддержка после запуска?",
+    answer: "Да. Включаем мониторинг, регулярные правки сценариев и контроль эффективности.",
   },
-];
-
-const tickerWords = [
-  CTA_PRIMARY,
-  "•",
-  CTA_SECONDARY,
-  "•",
-  CTA_TERTIARY,
-  "•",
-  CTA_PRIMARY,
 ];
 
 function LogoMark({ className = "" }) {
@@ -282,31 +315,13 @@ function useReveal() {
   }, []);
 }
 
-function HowItWorks() {
-  return (
-    <section className="showcase sectionDot reveal" id="demo">
-      <h2 className="sectionTitle">Как TrustOne работает</h2>
-      <p className="sectionSubtitle">Lead → Dialog → Qualification → Offer → Payment → Action Center</p>
-      <div className="flowGrid">
-        {flowSteps.map((step) => (
-          <article className="flowCard" key={step.title}>
-            <Glyph name={step.icon} className="flowIcon" />
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Faq() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="sectionDot faqSection reveal" id="faq">
-      <h2 className="sectionTitle">FAQ</h2>
-      <p className="sectionSubtitle">Ответы на вопросы перед пилотом</p>
+    <section className="section faqSection reveal" id="faq">
+      <h2 className="sectionTitle">Частые вопросы</h2>
+      <p className="sectionSubtitle">Ключевые вопросы перед запуском пилота</p>
       <div className="faqList">
         {faqItems.map((item, idx) => {
           const isOpen = idx === open;
@@ -344,27 +359,39 @@ export default function App() {
   return (
     <div className="page">
       <header className="topNav reveal is-visible">
-        <div className="shell">
+        <div className="shell navRow">
           <div className="logoMark">
             <LogoMark />
+            <span className="brandName">TrustOne</span>
           </div>
+          <nav className="topLinks" aria-label="Навигация по разделам">
+            {navLinks.map((item) => (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </div>
       </header>
 
       <main className="shell">
-        <section className="hero sectionDot reveal is-visible">
+        <section className="hero reveal is-visible" id="top">
           <h1>
             Не даем лидам из Telegram/VK
             <br />
             теряться и доводим их до оплаты
           </h1>
           <p>
-            TrustOne ставится поверх текущих продаж: держит fast response SLA, квалифицирует лидов, дожимает до
+            TrustOne ставится поверх ваших текущих продаж: отвечает по SLA, квалифицирует лидов, дожимает до
             предоплаты, показывает утечки денег и запускается за 48 часов.
           </p>
           <div className="heroButtons">
-            <button className="pill light">{CTA_PRIMARY}</button>
-            <button className="pill dark">{CTA_SECONDARY}</button>
+            <a className="pill primary" href="#contact">
+              {CTA_PRIMARY}
+            </a>
+            <a className="pill secondary" href="#kak-rabotaet">
+              {CTA_SECONDARY}
+            </a>
           </div>
           <div className="heroTrust">1 вертикаль • 1 канал • запуск за 48 часов • без замены CRM</div>
         </section>
@@ -373,9 +400,21 @@ export default function App() {
       <div className="topDivider" />
 
       <main className="shell">
-        <HowItWorks />
+        <section className="section reveal" id="kak-rabotaet">
+          <h2 className="sectionTitle">Как работает TrustOne</h2>
+          <p className="sectionSubtitle">Лид → Диалог → Квалификация → Оффер → Оплата → Кабинет контроля</p>
+          <div className="flowGrid">
+            {flowSteps.map((step) => (
+              <article className="flowCard" key={step.title}>
+                <Glyph name={step.icon} className="flowIcon" />
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        <section className="sectionDot benefitsSection reveal">
+        <section className="section reveal">
           <h2 className="sectionTitle">Где утекают деньги</h2>
           <div className="benefitsGrid">
             {leakPoints.map((item) => (
@@ -388,15 +427,15 @@ export default function App() {
           </div>
         </section>
 
-        <section className="sectionDot statement reveal">
+        <section className="section statement reveal">
           <p>
-            <span className="strongLine">DELAYED RESPONSE KILLS PAID TRAFFIC EFFICIENCY.</span>
-            <span className="strongLine">WEAK FOLLOW-UP KILLS PAYMENT CONVERSION.</span>
-            <span className="fadeLine">TRUSTONE FIXES BOTH WITH OPERATIONAL CONTROL.</span>
+            <span className="strongLine">Поздний ответ убивает окупаемость платного трафика.</span>
+            <span className="strongLine">Слабый повторный контакт убивает конверсию в оплату.</span>
+            <span className="fadeLine">TrustOne закрывает обе проблемы через управляемый диалог, путь до оплаты и кабинет контроля.</span>
           </p>
         </section>
 
-        <section className="sectionDot benefitsSection reveal">
+        <section className="section reveal" id="chto-menyaetsya">
           <h2 className="sectionTitle">Что меняется после запуска</h2>
           <div className="benefitsGrid">
             {benefits.map((item) => (
@@ -409,8 +448,8 @@ export default function App() {
           </div>
         </section>
 
-        <section className="sectionDot proofSection reveal">
-          <h2 className="sectionTitle">What you&apos;ll actually see</h2>
+        <section className="section proofSection reveal">
+          <h2 className="sectionTitle">Что вы увидите в кабинете</h2>
           <div className="proofGrid">
             {proofItems.map((item) => (
               <article className="proofCard" key={item.title}>
@@ -418,34 +457,70 @@ export default function App() {
                 <p>{item.text}</p>
               </article>
             ))}
+            <article className="proofVisual" aria-label="Пример еженедельного отчета по ценности">
+              <h3>Пример еженедельного отчета по ценности</h3>
+              <div className="proofKpis">
+                <div>
+                  <span>Ответ в SLA</span>
+                  <strong>92%</strong>
+                </div>
+                <div>
+                  <span>Конверсия в оплату</span>
+                  <strong>+18%</strong>
+                </div>
+                <div>
+                  <span>Потери на повторном контакте</span>
+                  <strong>-27%</strong>
+                </div>
+              </div>
+              <div className="proofBars">
+                <p>
+                  <span>Лид → Диалог</span>
+                  <i style={{ width: "88%" }} />
+                </p>
+                <p>
+                  <span>Диалог → Квалификация</span>
+                  <i style={{ width: "67%" }} />
+                </p>
+                <p>
+                  <span>Квалификация → Оплата</span>
+                  <i style={{ width: "54%" }} />
+                </p>
+              </div>
+            </article>
           </div>
         </section>
 
-        <section className="sectionDot sectors reveal">
-          <div className="serviceList">
-            <h3>Telegram/VK revenue layer</h3>
-            <h3>Qualification and follow-up</h3>
-            <h3>Payment conversion flow</h3>
-            <h3>Action center + leak map</h3>
-            <h3>Channel fallback (VK/MAX)</h3>
-            <h3>Compliance-ready operations</h3>
-            <h3>48h onboarding pack</h3>
+        <section className="section featureSection reveal">
+          <div className="featureSplit">
+            <div className="featureColumns">
+              {featureGroups.map((group) => (
+                <article className="featureBox" key={group.title}>
+                  <h3>{group.title}</h3>
+                  <ul>
+                    {group.points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+            <aside className="sectorCard">
+              <header>
+                <h3>Фокус по нишам</h3>
+                <Glyph name="spark" className="sectorSpark" />
+              </header>
+              <ul>
+                <li>Основная: Клиники и эстетические услуги</li>
+                <li>Также: Домашние сервисы и ремонт</li>
+                <li>Также: Юридические услуги</li>
+              </ul>
+            </aside>
           </div>
-          <aside className="sectorCard">
-            <header>
-              <h3>Vertical focus</h3>
-              <Glyph name="spark" className="sectorSpark" />
-            </header>
-            <ul>
-              <li>Main: Beauty & Clinics</li>
-              <li>Also: Home Services</li>
-              <li>Also: Legal Services</li>
-            </ul>
-          </aside>
         </section>
 
-        <section className="sectionDot reveal">
-          <h2 className="sectionTitle">Launch in 48 hours</h2>
+        <section className="section reveal">
+          <h2 className="sectionTitle">Запуск за 48 часов</h2>
           <div className="approachGrid">
             {launchSteps.map((item, idx) => (
               <article className={`approachCard ${idx === launchSteps.length - 1 ? "wide" : ""}`} key={item.title}>
@@ -457,88 +532,81 @@ export default function App() {
           </div>
         </section>
 
-        <section className="sectionDot reveal">
-          <h2 className="sectionTitle">Pricing</h2>
+        <section className="section reveal" id="ceny">
+          <h2 className="sectionTitle">Цены</h2>
           <p className="sectionSubtitle">
-            Пилотируем на части трафика, показываем baseline vs uplift и масштабируем только после подтверждённого
-            эффекта.
+            Начинаем с пилота на части трафика, фиксируем базовую линию и масштабируемся только после подтвержденного
+            результата.
           </p>
-          <div className="pricingShell">
-            <div className="pricingGrid">
-              {pricing.map((plan) => (
-                <article className={`priceCard ${plan.dark ? "dark" : ""}`} key={plan.name}>
-                  <h3>{plan.name}</h3>
-                  <p>{plan.text}</p>
-                  <strong>{plan.price}</strong>
-                  <hr />
-                  <button>{plan.cta}</button>
-                  <ul>
-                    {plan.points.map((point) => (
-                      <li key={point}>+ {point}</li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-            <div className="asyncNote">Kickoff call included • Weekly review included • Controlled pilot with KPI</div>
+          <div className="pricingGrid">
+            {pricing.map((plan) => (
+              <article className={`priceCard ${plan.dark ? "dark" : ""}`} key={plan.name}>
+                <h3>{plan.name}</h3>
+                <p className="priceAudience">{plan.audience}</p>
+                <strong>{plan.price}</strong>
+                <button>{plan.cta}</button>
+                <ul>
+                  {plan.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
           </div>
         </section>
 
-        <section className="hireStrip reveal">
+        <section className="ctaStrip section reveal">
           <article>
             <div className="hireTop">
               <Glyph name="spark" className="hireIcon" />
-              <span className="hireBadge">AUDIT</span>
+              <span className="hireBadge">АУДИТ</span>
             </div>
             <h3>Получить аудит воронки</h3>
-            <p>Покажем, где теряются лиды, и какой сценарий даст быстрый uplift на пилоте.</p>
+            <p>Покажем, где теряются лиды и какой сценарий даст быстрый прирост на пилоте.</p>
             <button>{CTA_TERTIARY}</button>
           </article>
           <article className="dark">
             <div className="hireTop">
               <Glyph name="triangle" className="hireIcon" />
-              <span className="hireBadge pro">PILOT</span>
+              <span className="hireBadge pro">ПИЛОТ</span>
             </div>
-            <h3>Запуск с KPI и canary</h3>
-            <p>Не ломаем текущий стек: подключаем один канал, фиксируем baseline и доводим до оплаты.</p>
+            <h3>Запустить пилот с KPI</h3>
+            <p>Подключаем 1 канал, фиксируем базовую линию и доводим до оплаты без замены текущего стека.</p>
             <button>{CTA_PRIMARY}</button>
           </article>
         </section>
 
-        <section className="sectionDot founder reveal">
+        <section className="section founder reveal">
           <div className="founderContent">
-            <h2 className="sectionTitle">Why this was built</h2>
+            <h2 className="sectionTitle">Зачем мы это сделали</h2>
+            <p>TrustOne вырос из реальных продаж, где поздний ответ и слабый повторный контакт сжигали платный трафик.</p>
             <p>
-              TrustOne вырос из операционных продаж, где delayed response и слабый follow-up ежедневно сжигали paid
-              traffic.
+              Мы строим не «бота», а слой выручки: квалификация, дожим до оплаты, атрибуция и контроль действий в
+              кабинете.
             </p>
-            <p>
-              Поэтому мы продаём не «бота», а revenue layer: qualification, objection handling, payment, attribution и
-              action center в одном контуре.
-            </p>
-            <p>Каждый релиз привязан к деньгам: где выросло, где утекло и что делаем на следующей неделе.</p>
+            <p>Каждую неделю видно, где деньги потерялись, где выросли, и какие правки дают следующий шаг роста.</p>
           </div>
           <div className="founderVisual">
-            <img src="/ref_assets/founder_me.png" alt="Founder" loading="lazy" />
+            <img src="/ref_assets/founder_me.png" alt="Основатель TrustOne" loading="lazy" />
           </div>
         </section>
 
-        <section className="sectionDot partners reveal">
-          <h2 className="sectionTitle">Trust & operations</h2>
-          <p className="sectionSubtitle">Не декор, а прикладные опоры для пилота и масштабирования.</p>
+        <section className="section trustSection reveal">
+          <h2 className="sectionTitle">Доверие и операционная надежность</h2>
+          <p className="sectionSubtitle">Конкретные опоры для пилота и управляемого масштабирования.</p>
           <div className="partnerRow">
+            <span className="partnerBadge">YooKassa</span>
             <span className="partnerBadge">CRM</span>
-            <span className="partnerBadge">YK</span>
-            <span className="partnerBadge">SLA</span>
-            <span className="partnerBadge">ISO</span>
-            <span className="partnerBadge">RF</span>
-            <span className="partnerBadge">48h</span>
+            <span className="partnerBadge">Изоляция</span>
+            <span className="partnerBadge">Аудит</span>
+            <span className="partnerBadge">РФ</span>
+            <span className="partnerBadge">48ч</span>
           </div>
           <div className="trustList">
-            <p>YooKassa integration</p>
-            <p>CRM sync without replacement</p>
-            <p>Tenant isolation + audit trail</p>
-            <p>RF compliance package</p>
+            <p>Интеграция YooKassa и платежный контроль</p>
+            <p>Синхронизация с CRM без миграции</p>
+            <p>Изоляция арендаторов и журнал аудита</p>
+            <p>Пакет комплаенса РФ для операций</p>
           </div>
         </section>
 
@@ -549,29 +617,30 @@ export default function App() {
         <div className="footerInner">
           <div className="footerBrand">
             <LogoMark className="footerLogoMark" />
-            <span>trustone</span>
+            <span>TrustOne</span>
           </div>
-          <div className="footerTicker" aria-hidden="true">
-            <div className="footerTrack">
-              {tickerWords.concat(tickerWords).map((word, idx) => (
-                <span key={`${word}-${idx}`}>{word}</span>
-              ))}
-            </div>
-          </div>
-          <a className="footerEmail" href="mailto:hello@trustone.ai">
-            hello@trustone.ai
-          </a>
-          <a className="footerTelegram" href="https://t.me/trustone_revenue" target="_blank" rel="noreferrer">
-            Telegram: @trustone_revenue
-          </a>
+          <h2 className="footerLead">Запросить пилот</h2>
+          <p className="footerSublead">
+            Подключим 1 канал, зафиксируем базовую линию и покажем прирост на части входящих лидов.
+          </p>
           <form className="footerForm" onSubmit={(event) => event.preventDefault()}>
-            <input type="text" placeholder="Ваш Telegram или телефон" aria-label="Контакт для пилота" />
+            <input type="text" placeholder="Имя / компания" aria-label="Имя или компания" />
+            <input type="text" placeholder="Телеграм / телефон" aria-label="Телеграм или телефон" />
             <button type="submit">{CTA_PRIMARY}</button>
           </form>
-          <p>© 2026 TrustOne. All rights reserved</p>
-          <small>Revenue layer for messenger sales</small>
+          <div className="footerContacts">
+            <a href="mailto:hello@trustone.ai">hello@trustone.ai</a>
+            <a href="https://t.me/trustone_revenue" target="_blank" rel="noreferrer">
+              Telegram: @trustone_revenue
+            </a>
+          </div>
+          <small>© 2026 TrustOne. Слой выручки для мессенджерных продаж</small>
         </div>
       </footer>
+
+      <a className="stickyCta" href="#contact">
+        {CTA_PRIMARY}
+      </a>
     </div>
   );
 }
