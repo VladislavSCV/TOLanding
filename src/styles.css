@@ -112,6 +112,7 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .pill {
@@ -119,7 +120,7 @@ button {
   border-radius: 999px;
   height: 52px;
   padding: 0 28px;
-  font-size: 33px;
+  font-size: clamp(1rem, 2vw, 1.7rem);
   font-weight: 500;
   letter-spacing: -0.02em;
   cursor: pointer;
@@ -141,6 +142,13 @@ button {
   color: #fff;
 }
 
+.heroTrust {
+  margin-top: 14px;
+  color: #6a6a70;
+  font-size: clamp(0.95rem, 1.15vw, 1.3rem);
+  letter-spacing: -0.01em;
+}
+
 .topDivider {
   border-top: 1px solid var(--line);
 }
@@ -160,6 +168,41 @@ button {
 
 .showcase::before {
   top: 46%;
+}
+
+.flowGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.flowCard {
+  border: 1px solid #dfdfe2;
+  border-radius: 22px;
+  background: #e9e9ec;
+  padding: 20px;
+}
+
+.flowIcon {
+  width: 32px;
+  height: 32px;
+  color: #242529;
+}
+
+.flowCard h3 {
+  margin: 12px 0 0;
+  font-family: "Safiro Medium", "Apfel Grotezk", sans-serif;
+  font-size: clamp(1.8rem, 2.1vw, 2.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.flowCard p {
+  margin: 12px 0 0;
+  color: #5f5f65;
+  font-size: clamp(0.95rem, 1.07vw, 1.24rem);
+  line-height: 1.3;
 }
 
 .showcaseViewport {
@@ -421,6 +464,39 @@ button {
   font-variant-numeric: lining-nums tabular-nums;
 }
 
+.proofSection {
+  padding-top: 86px;
+}
+
+.proofGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.proofCard {
+  border: 1px solid #dedee1;
+  border-radius: 20px;
+  background: #ebebee;
+  padding: 22px;
+}
+
+.proofCard h3 {
+  margin: 0;
+  font-family: "Safiro Medium", "Apfel Grotezk", sans-serif;
+  font-size: clamp(1.9rem, 2.5vw, 2.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.proofCard p {
+  margin: 12px 0 0;
+  color: #65656b;
+  font-size: clamp(1rem, 1.08vw, 1.28rem);
+  line-height: 1.25;
+}
+
 .sectors {
   padding-top: 80px;
   display: grid;
@@ -588,7 +664,7 @@ button {
   background: #000;
   color: #fff;
   height: 52px;
-  font-size: 28px;
+  font-size: clamp(1rem, 1.3vw, 1.3rem);
   font-weight: 500;
   cursor: pointer;
 }
@@ -709,7 +785,7 @@ button {
   color: #fff;
   height: 52px;
   padding: 0 24px;
-  font-size: 24px;
+  font-size: clamp(0.95rem, 1.25vw, 1.25rem);
   cursor: pointer;
 }
 
@@ -791,6 +867,23 @@ button {
 
 .partnerBadge.muted {
   color: #8c8c90;
+}
+
+.trustList {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.trustList p {
+  margin: 0;
+  border: 1px solid #dbdbde;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #ededef;
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  color: #4e4e53;
 }
 
 .faqSection {
@@ -910,6 +1003,44 @@ button {
   text-underline-offset: 7px;
 }
 
+.footerTelegram {
+  display: block;
+  margin-top: 18px;
+  color: #1f1f21;
+  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+  text-decoration: none;
+}
+
+.footerForm {
+  margin: 24px auto 0;
+  width: min(760px, 100%);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.footerForm input {
+  border: 1px solid #cbd100;
+  border-radius: 999px;
+  background: #edf147;
+  height: 52px;
+  padding: 0 18px;
+  font-size: 16px;
+  color: #1d1d1f;
+  outline: none;
+}
+
+.footerForm button {
+  border: 0;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  height: 52px;
+  padding: 0 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 .footer p {
   margin: 74px 0 0;
   font-size: clamp(0.95rem, 1.1vw, 1.3rem);
@@ -1020,7 +1151,7 @@ button {
   }
 
   .pill {
-    font-size: 26px;
+    font-size: 18px;
     height: 46px;
     padding: 0 22px;
   }
@@ -1030,6 +1161,8 @@ button {
   }
 
   .benefitsGrid,
+  .flowGrid,
+  .proofGrid,
   .metrics,
   .sectors,
   .pricingGrid,
@@ -1052,6 +1185,10 @@ button {
     width: 52px;
     height: 52px;
     font-size: 22px;
+  }
+
+  .trustList {
+    grid-template-columns: 1fr;
   }
 
   .footer {
@@ -1113,6 +1250,10 @@ button {
   .hireStrip button {
     height: 44px;
     font-size: 17px;
+  }
+
+  .footerForm {
+    grid-template-columns: 1fr;
   }
 
   .sectorCard {

@@ -1,175 +1,167 @@
-﻿import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useState } from "react";
 
-const showcase = [
+const CTA_PRIMARY = "Запросить пилот";
+const CTA_SECONDARY = "Посмотреть демо";
+const CTA_TERTIARY = "Получить аудит воронки";
+
+const flowSteps = [
+  { icon: "inspect", title: "Lead enters", text: "Лид приходит из Telegram, VK или формы с сайта." },
+  { icon: "sync", title: "Guided dialog", text: "Диалог идет по playbook, не ломая стиль вашей команды." },
+  { icon: "target", title: "Qualification", text: "Фиксируем сегмент, бюджет, срочность и next best action." },
+  { icon: "bolt", title: "Offer", text: "Даём релевантный оффер и снимаем ключевые возражения." },
+  { icon: "growth", title: "Payment", text: "Дожимаем до предоплаты, синхронизируем статусы в CRM." },
+  { icon: "shield", title: "Action center", text: "Показываем утечки, stuck dialogs и baseline vs uplift." },
+];
+
+const leakPoints = [
   {
-    id: "visual-electric",
-    brand: "VISUAL ELECTRIC",
-    title: "The new\ncreative workflow",
-    text: "Turn ideas into paid conversations. Powered by AI, directed by your sales goals.",
-    button: "Get Started",
-    image: "/ref_assets/workA.png",
-    darkText: false,
+    icon: "bolt",
+    title: "Late response",
+    text: "Лид не получает быстрый первый ответ и остывает до контакта с менеджером.",
   },
   {
-    id: "vizuur",
-    brand: "VIZUUR",
-    title: "THE AI SALES\nYOU'VE BEEN\nWAITING FOR",
-    text: "Qualify faster, answer objections, and trigger payment at the right moment.",
-    button: "Book Demo",
-    image: "/ref_assets/hero_work1.png",
-    darkText: false,
+    icon: "iterate",
+    title: "No follow-up",
+    text: "Без системного follow-up диалог обрывается до оффера и оплаты.",
   },
   {
-    id: "warp",
-    brand: "WARP",
-    title: "From lead to\nproduction revenue",
-    text: "Action center, QA loop and monitoring in one operating layer.",
-    button: "See Flow",
-    image: "/ref_assets/card_orange1.png",
-    darkText: false,
+    icon: "target",
+    title: "Weak qualification",
+    text: "Трафик смешивается, приоритеты теряются, команда тратит время на низкий intent.",
+  },
+  {
+    icon: "growth",
+    title: "No payment push",
+    text: "Есть переписка, но нет управляемого перехода к счёту, предоплате и check.",
   },
 ];
 
 const benefits = [
   {
     icon: "bolt",
-    title: "Fast turnaround",
-    text: "Go-live in 48 hours with one channel, one offer and strict response SLA.",
+    title: "Fast response SLA",
+    text: "Первый ответ и follow-up без провалов по входящему трафику.",
   },
-  {
-    icon: "target",
-    title: "Tailored design",
-    text: "Sales Brain, DQL and objection handling are adapted to your exact niche.",
-  },
-  {
-    icon: "growth",
-    title: "Scalable solutions",
-    text: "From pilot to multi-tenant growth with channel resilience and billing lifecycle.",
-  },
-  {
-    icon: "shield",
-    title: "Fixed price",
-    text: "Clear setup and monthly model tied to measurable conversion and payment outcomes.",
-  },
-];
-
-const approach = [
   {
     icon: "inspect",
-    title: "Consulting",
-    text: "We map baseline metrics, lead leaks and payment blockers before launch.",
-  },
-  {
-    icon: "sync",
-    title: "Collaborative review",
-    text: "Your team and ours align scripts, handoff rules, compliance and payment logic.",
-  },
-  {
-    icon: "spark",
-    title: "Make it pop",
-    text: "Human-like pacing, anti-spam trust layer and stronger close triggers in dialogues.",
-  },
-  {
-    icon: "iterate",
-    title: "Iterate",
-    text: "QA findings become playbook updates, pack versions and new test hypotheses.",
+    title: "Revenue leak visibility",
+    text: "Видно, где умирают лиды и какие этапы режут выручку.",
   },
   {
     icon: "launch",
-    title: "Ready to take off",
-    text: "After uplift is proven we scale channels, expand offers and keep quality stable.",
+    title: "Payment-ready flow",
+    text: "Диалог доводит до offer и оплаты, а не заканчивается на переписке.",
+  },
+  {
+    icon: "shield",
+    title: "Controlled rollout",
+    text: "Пилот за 48 часов, canary на части трафика и еженедельный value report.",
+  },
+];
+
+const proofItems = [
+  { title: "Baseline vs uplift", text: "Сравнение контрольной и пилотной группы в одном отчёте." },
+  { title: "Revenue leak map", text: "Карта утечек по этапам: response, qualification, offer, payment." },
+  { title: "Stuck dialogs", text: "Список диалогов, где нужен ручной дожим или смена playbook." },
+  { title: "ROI / payback", text: "Отчёт по приросту, стоимости внедрения и сроку окупаемости." },
+];
+
+const launchSteps = [
+  {
+    icon: "inspect",
+    title: "1. Pack activation",
+    text: "Фиксируем одну вертикаль, один канал и KPI пилота.",
+  },
+  {
+    icon: "sync",
+    title: "2. Channel setup",
+    text: "Подключаем Telegram/VK, fallback и правила handoff на оператора.",
+  },
+  {
+    icon: "growth",
+    title: "3. Payments + CRM",
+    text: "Связываем оплату, webhooks и синхронизацию с CRM без её замены.",
+  },
+  {
+    icon: "iterate",
+    title: "4. Controlled canary",
+    text: "Запускаем на части трафика, сверяем baseline и первые сигналы uplift.",
+  },
+  {
+    icon: "launch",
+    title: "5. Weekly value report",
+    text: "Каждую неделю показываем, где рост и что нужно поправить в playbook.",
   },
 ];
 
 const pricing = [
   {
-    name: "Pilot Pack",
-    text: "Revenue MVP to stop losing incoming leads in messenger.",
-    price: "$10K+",
-    cta: "Inquire for Pilot Pack",
-    points: ["Single channel", "Sales Brain setup", "Payment flow", "Weekly scorecard"],
+    name: "Pilot",
+    text: "Для бизнеса, который хочет проверить uplift на части лидов.",
+    price: "от 300 000 ₽ / пилот",
+    cta: CTA_PRIMARY,
+    points: ["1 канал", "Qualification + payment flow", "Controlled pilot with KPI", "Weekly review included"],
   },
   {
-    name: "Growth Pack",
-    text: "Full revenue layer with action center and quality loops.",
-    price: "$20K+",
-    cta: "Inquire for Growth Pack",
-    points: ["Multiple channels", "ROI attribution", "Prospecting feed", "Ops dashboard"],
+    name: "Growth",
+    text: "Для команды, которой нужен action center и второй контур оптимизации.",
+    price: "от 550 000 ₽ / мес",
+    cta: CTA_PRIMARY,
+    points: ["Action center", "Leak map + attribution", "Второй сценарий дожима", "Baseline vs uplift reporting"],
   },
   {
-    name: "Retainer",
-    text: "Ongoing revenue optimization to keep your product moving forward.",
-    price: "$8K/mo",
-    cta: "Inquire for Retainer",
+    name: "Managed Revenue Layer",
+    text: "Для компаний, где нужен постоянный рост конверсии и стабильность каналов.",
+    price: "от 900 000 ₽ / мес",
+    cta: CTA_PRIMARY,
     dark: true,
-    points: [
-      "Maintenance & optimization",
-      "Feature rollouts",
-      "UI/UX + script audits",
-      "Playbook library updates",
-      "Priority support",
-    ],
+    points: ["Playbook optimization", "Channel resilience", "RF compliance package", "Priority ops support"],
   },
 ];
 
 const faqItems = [
   {
-    question: "How do we kick things off?",
-    answer:
-      "You choose a package, we lock the scope and launch a focused go-live flow in 48 hours.",
+    question: "How fast can we launch?",
+    answer: "Пилот запускается за 48 часов: подключение канала, playbook, payment flow и canary.",
   },
   {
-    question: "Why don't you do cold spam?",
-    answer:
-      "TrustOne is built as opportunity intelligence plus controlled outreach, not mass spam automation.",
+    question: "Do we replace our CRM?",
+    answer: "Нет. TrustOne работает поверх текущего CRM-стека и синхронизирует статусы сделок.",
   },
   {
-    question: "How does go-live look like?",
-    answer:
-      "Baseline -> integration -> scripts -> pilot -> payment proof -> scaling roadmap.",
+    question: "Do you support pilot-first rollout?",
+    answer: "Да. Стартуем с части трафика и показываем baseline vs uplift до масштабирования.",
   },
   {
-    question: "Can you work with Bitrix24 or amoCRM?",
-    answer:
-      "Yes. We work as a revenue layer above your current CRM stack without forcing a full migration.",
+    question: "How do you track revenue impact?",
+    answer: "Через воронку этапов, leak map, payment attribution и weekly value report.",
+  },
+  {
+    question: "What happens if Telegram delivery fails?",
+    answer: "Срабатывает channel fallback: переводим коммуникацию в VK/MAX и фиксируем событие в отчёте.",
   },
   {
     question: "How do you handle RF payments and checks?",
-    answer:
-      "We wire payment flow with webhook reconciliation and compliance checklist for RF operations.",
+    answer: "Подключаем RF-платежи, сверяем вебхуки и выдаём compliance checklist для операционного контура.",
   },
   {
-    question: "Do you offer refunds?",
-    answer:
-      "Refund conditions are fixed in the agreement by phase and delivery milestones.",
+    question: "Who takes over when the bot should stop?",
+    answer: "Action center передаёт диалог человеку по правилам handoff и приоритетам выручки.",
   },
   {
-    question: "Do you provide post launch support?",
-    answer:
-      "Yes, through a retainer model with continuous optimization, QA and conversion monitoring.",
+    question: "Do you provide post-launch support?",
+    answer: "Да. Managed Revenue Layer включает постоянный мониторинг, QA и обновления playbook.",
   },
-  {
-    question: "Do you provide docs and handover?",
-    answer:
-      "Yes, you get runbooks, onboarding steps, ownership mapping and weekly performance reporting.",
-  },
-];
-
-
-const metricsData = [
-  { value: 3, suffix: "+", label: "Finalized projects" },
-  { value: 94, suffix: "%", label: "Conversion rate improvement" },
-  { value: 2, suffix: "+", label: "Years of market experience" },
 ];
 
 const tickerWords = [
-  "Let's work together",
-  "✶",
-  "Let's work together",
-  "✶",
-  "Let's work together",
-  "✶",
-  "Let's work together",
+  CTA_PRIMARY,
+  "•",
+  CTA_SECONDARY,
+  "•",
+  CTA_TERTIARY,
+  "•",
+  CTA_PRIMARY,
 ];
 
 function LogoMark({ className = "" }) {
@@ -255,8 +247,6 @@ function Glyph({ name, className = "" }) {
             <path d="M8 15 V24 H17" {...common} />
           </>
         );
-      case "diamond":
-        return <path d="M16 4 L28 16 L16 28 L4 16 L16 4 Z" {...common} />;
       case "triangle":
         return <path d="M16 5 L27 25 H5 L16 5 Z" {...common} />;
       default:
@@ -292,119 +282,19 @@ function useReveal() {
   }, []);
 }
 
-function useMobileFlag(breakpoint = 940) {
-  const [mobile, setMobile] = useState(() => window.innerWidth < breakpoint);
-
-  useEffect(() => {
-    const onResize = () => setMobile(window.innerWidth < breakpoint);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [breakpoint]);
-
-  return mobile;
-}
-
-function formatMetricValue(value, suffix) {
-  return `${value}${suffix}`;
-}
-
-function MetricValue({ end, suffix, delay = 0 }) {
-  const [value, setValue] = useState(0);
-  const [started, setStarted] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return undefined;
-
-    let frameId = 0;
-    let timeoutId = 0;
-
-    const runCount = () => {
-      setStarted(true);
-      const start = performance.now();
-      const duration = 1180;
-
-      const tick = (now) => {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - (1 - progress) ** 3;
-        setValue(Math.round(end * eased));
-        if (progress < 1) {
-          frameId = requestAnimationFrame(tick);
-        }
-      };
-
-      frameId = requestAnimationFrame(tick);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.some((entry) => entry.isIntersecting);
-        if (!visible) return;
-        observer.disconnect();
-        timeoutId = window.setTimeout(runCount, delay);
-      },
-      { threshold: 0.55 }
-    );
-
-    observer.observe(node);
-
-    return () => {
-      observer.disconnect();
-      if (frameId) cancelAnimationFrame(frameId);
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [delay, end]);
-
+function HowItWorks() {
   return (
-    <strong ref={ref} className={`metricValue ${started ? "is-live" : ""}`}>
-      {formatMetricValue(value, suffix)}
-    </strong>
-  );
-}
-
-function Showcase() {
-  const mobile = useMobileFlag();
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    setIndex(0);
-  }, [mobile]);
-
-  const maxIndex = mobile ? showcase.length - 1 : showcase.length - 2;
-  const step = mobile ? "100% + 14px" : "52% + 14px";
-
-  const next = () => setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  const prev = () => setIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
-
-  return (
-    <section className="showcase sectionDot reveal">
-      <div className="showcaseViewport">
-        <div className="showcaseTrack" style={{ transform: `translateX(calc(-${index} * (${step})))` }}>
-          {showcase.map((slide) => (
-            <article className="showcaseCard" key={slide.id}>
-              <img src={slide.image} alt={slide.brand} loading="lazy" />
-              <div className={`showcaseOverlay ${slide.darkText ? "darkText" : ""}`}>
-                <span className="showcaseBrand">{slide.brand}</span>
-                <h3>
-                  {slide.title.split("\n").map((line) => (
-                    <span key={line}>{line}</span>
-                  ))}
-                </h3>
-                <p>{slide.text}</p>
-                <button>{slide.button}</button>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-      <div className="showcaseArrows">
-        <button aria-label="Previous slide" onClick={prev}>
-          {"\u2190"}
-        </button>
-        <button aria-label="Next slide" onClick={next}>
-          {"\u2192"}
-        </button>
+    <section className="showcase sectionDot reveal" id="demo">
+      <h2 className="sectionTitle">Как TrustOne работает</h2>
+      <p className="sectionSubtitle">Lead → Dialog → Qualification → Offer → Payment → Action Center</p>
+      <div className="flowGrid">
+        {flowSteps.map((step) => (
+          <article className="flowCard" key={step.title}>
+            <Glyph name={step.icon} className="flowIcon" />
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -416,7 +306,7 @@ function Faq() {
   return (
     <section className="sectionDot faqSection reveal" id="faq">
       <h2 className="sectionTitle">FAQ</h2>
-      <p className="sectionSubtitle">Some common questions and answers</p>
+      <p className="sectionSubtitle">Ответы на вопросы перед пилотом</p>
       <div className="faqList">
         {faqItems.map((item, idx) => {
           const isOpen = idx === open;
@@ -464,29 +354,31 @@ export default function App() {
       <main className="shell">
         <section className="hero sectionDot reveal is-visible">
           <h1>
-            Building revenue systems
+            Не даем лидам из Telegram/VK
             <br />
-            for immersive digital sales.
+            теряться и доводим их до оплаты
           </h1>
           <p>
-            We design, build and ship messenger-first sales flows that turn incoming leads into payments.
+            TrustOne ставится поверх текущих продаж: держит fast response SLA, квалифицирует лидов, дожимает до
+            предоплаты, показывает утечки денег и запускается за 48 часов.
           </p>
           <div className="heroButtons">
-            <button className="pill light">Let&apos;s talk</button>
-            <button className="pill dark">Pricing</button>
+            <button className="pill light">{CTA_PRIMARY}</button>
+            <button className="pill dark">{CTA_SECONDARY}</button>
           </div>
+          <div className="heroTrust">1 вертикаль • 1 канал • запуск за 48 часов • без замены CRM</div>
         </section>
       </main>
 
       <div className="topDivider" />
 
       <main className="shell">
-        <Showcase />
+        <HowItWorks />
 
         <section className="sectionDot benefitsSection reveal">
-          <h2 className="sectionTitle">Benefits</h2>
+          <h2 className="sectionTitle">Где утекают деньги</h2>
           <div className="benefitsGrid">
-            {benefits.map((item) => (
+            {leakPoints.map((item) => (
               <article className="benefitCard" key={item.title}>
                 <Glyph name={item.icon} className="benefitIcon" />
                 <h3>{item.title}</h3>
@@ -498,54 +390,65 @@ export default function App() {
 
         <section className="sectionDot statement reveal">
           <p>
-            <span className="strongLine">BUILDING SYSTEMS THAT NOT ONLY</span>
-            <span className="strongLine">LOOK GREAT BUT ALSO</span>
-            <span className="fadeLine">DELIVER MEASURABLE RESULTS.</span>
+            <span className="strongLine">DELAYED RESPONSE KILLS PAID TRAFFIC EFFICIENCY.</span>
+            <span className="strongLine">WEAK FOLLOW-UP KILLS PAYMENT CONVERSION.</span>
+            <span className="fadeLine">TRUSTONE FIXES BOTH WITH OPERATIONAL CONTROL.</span>
           </p>
         </section>
 
-        <section className="metrics reveal">
-          {metricsData.map((item, idx) => (
-            <article key={item.label} style={{ "--metric-delay": `${idx * 120}ms` }}>
-              <MetricValue end={item.value} suffix={item.suffix} delay={idx * 120} />
-              <span>{item.label}</span>
-            </article>
-          ))}
+        <section className="sectionDot benefitsSection reveal">
+          <h2 className="sectionTitle">Что меняется после запуска</h2>
+          <div className="benefitsGrid">
+            {benefits.map((item) => (
+              <article className="benefitCard" key={item.title}>
+                <Glyph name={item.icon} className="benefitIcon" />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="sectionDot proofSection reveal">
+          <h2 className="sectionTitle">What you&apos;ll actually see</h2>
+          <div className="proofGrid">
+            {proofItems.map((item) => (
+              <article className="proofCard" key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="sectionDot sectors reveal">
           <div className="serviceList">
-            <h3>Telegram Revenue Layer</h3>
-            <h3>VK + MAX Fallback</h3>
-            <h3>Website Lead Capture</h3>
-            <h3>Custom Sales Brain</h3>
-            <h3>YooKassa Integration</h3>
-            <h3>User Interface & Action Center</h3>
-            <h3>Vertical Pack Library</h3>
+            <h3>Telegram/VK revenue layer</h3>
+            <h3>Qualification and follow-up</h3>
+            <h3>Payment conversion flow</h3>
+            <h3>Action center + leak map</h3>
+            <h3>Channel fallback (VK/MAX)</h3>
+            <h3>Compliance-ready operations</h3>
+            <h3>48h onboarding pack</h3>
           </div>
           <aside className="sectorCard">
             <header>
-              <h3>Sectors</h3>
+              <h3>Vertical focus</h3>
               <Glyph name="spark" className="sectorSpark" />
             </header>
             <ul>
-              <li>Online Education</li>
-              <li>Beauty & Clinics</li>
-              <li>Fitness Studios</li>
-              <li>Home Services</li>
-              <li>Legal & Consulting</li>
-              <li>Real Estate</li>
-              <li>Automotive</li>
-              <li>eCommerce</li>
+              <li>Main: Beauty & Clinics</li>
+              <li>Also: Home Services</li>
+              <li>Also: Legal Services</li>
             </ul>
           </aside>
         </section>
 
         <section className="sectionDot reveal">
-          <h2 className="sectionTitle">Approach</h2>
+          <h2 className="sectionTitle">Launch in 48 hours</h2>
           <div className="approachGrid">
-            {approach.map((item, idx) => (
-              <article className={`approachCard ${idx === approach.length - 1 ? "wide" : ""}`} key={item.title}>
+            {launchSteps.map((item, idx) => (
+              <article className={`approachCard ${idx === launchSteps.length - 1 ? "wide" : ""}`} key={item.title}>
                 <Glyph name={item.icon} className="approachIcon" />
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
@@ -557,7 +460,8 @@ export default function App() {
         <section className="sectionDot reveal">
           <h2 className="sectionTitle">Pricing</h2>
           <p className="sectionSubtitle">
-            Deploy your messenger revenue layer with fixed scope, clear milestones and measurable outcomes.
+            Пилотируем на части трафика, показываем baseline vs uplift и масштабируем только после подтверждённого
+            эффекта.
           </p>
           <div className="pricingShell">
             <div className="pricingGrid">
@@ -576,7 +480,7 @@ export default function App() {
                 </article>
               ))}
             </div>
-            <div className="asyncNote">No calls. Async communication</div>
+            <div className="asyncNote">Kickoff call included • Weekly review included • Controlled pilot with KPI</div>
           </div>
         </section>
 
@@ -584,35 +488,35 @@ export default function App() {
           <article>
             <div className="hireTop">
               <Glyph name="spark" className="hireIcon" />
-              <span className="hireBadge">OPERATIONS READY</span>
+              <span className="hireBadge">AUDIT</span>
             </div>
-            <h3>Launch as Pilot</h3>
-            <p>Trusted by teams that need measurable uplift without replacing the whole stack.</p>
-            <button>Start Pilot</button>
+            <h3>Получить аудит воронки</h3>
+            <p>Покажем, где теряются лиды, и какой сценарий даст быстрый uplift на пилоте.</p>
+            <button>{CTA_TERTIARY}</button>
           </article>
           <article className="dark">
             <div className="hireTop">
               <Glyph name="triangle" className="hireIcon" />
-              <span className="hireBadge pro">PRO</span>
+              <span className="hireBadge pro">PILOT</span>
             </div>
-            <h3>Launch as Revenue Layer</h3>
-            <p>Production-ready with billing lifecycle, tenant isolation and action center workflows.</p>
-            <button>Book Architecture Call</button>
+            <h3>Запуск с KPI и canary</h3>
+            <p>Не ломаем текущий стек: подключаем один канал, фиксируем baseline и доводим до оплаты.</p>
+            <button>{CTA_PRIMARY}</button>
           </article>
         </section>
 
         <section className="sectionDot founder reveal">
           <div className="founderContent">
-            <h2 className="sectionTitle">The founder</h2>
+            <h2 className="sectionTitle">Why this was built</h2>
             <p>
-              TrustOne was built from real sales operations where delayed response and weak follow-up kill paid
-              traffic efficiency.
+              TrustOne вырос из операционных продаж, где delayed response и слабый follow-up ежедневно сжигали paid
+              traffic.
             </p>
             <p>
-              We ship deterministic sales workflows, not chatbot noise: qualification, objection handling, close
-              trigger, payment and attribution.
+              Поэтому мы продаём не «бота», а revenue layer: qualification, objection handling, payment, attribution и
+              action center в одном контуре.
             </p>
-            <p>Every release is tied to revenue impact, actionability and operational resilience.</p>
+            <p>Каждый релиз привязан к деньгам: где выросло, где утекло и что делаем на следующей неделе.</p>
           </div>
           <div className="founderVisual">
             <img src="/ref_assets/founder_me.png" alt="Founder" loading="lazy" />
@@ -620,23 +524,28 @@ export default function App() {
         </section>
 
         <section className="sectionDot partners reveal">
-          <h2 className="sectionTitle">Partners</h2>
-          <p className="sectionSubtitle">
-            We collaborate with operators and founders focused on measurable sales growth.
-          </p>
+          <h2 className="sectionTitle">Trust & operations</h2>
+          <p className="sectionSubtitle">Не декор, а прикладные опоры для пилота и масштабирования.</p>
           <div className="partnerRow">
-            <span className="partnerBadge">T1</span>
-            <span className="partnerBadge">VK</span>
+            <span className="partnerBadge">CRM</span>
             <span className="partnerBadge">YK</span>
-            <span className="partnerBadge">OPS</span>
-            <span className="partnerBadge muted">+</span>
+            <span className="partnerBadge">SLA</span>
+            <span className="partnerBadge">ISO</span>
+            <span className="partnerBadge">RF</span>
+            <span className="partnerBadge">48h</span>
+          </div>
+          <div className="trustList">
+            <p>YooKassa integration</p>
+            <p>CRM sync without replacement</p>
+            <p>Tenant isolation + audit trail</p>
+            <p>RF compliance package</p>
           </div>
         </section>
 
         <Faq />
       </main>
 
-      <footer className="footer reveal">
+      <footer className="footer reveal" id="contact">
         <div className="footerInner">
           <div className="footerBrand">
             <LogoMark className="footerLogoMark" />
@@ -649,16 +558,20 @@ export default function App() {
               ))}
             </div>
           </div>
-          <a className="footerEmail" href="mailto:inquiries@trustone.ai">
-            inquiries@trustone.ai
+          <a className="footerEmail" href="mailto:hello@trustone.ai">
+            hello@trustone.ai
           </a>
-          <p>© 2026 TrustOne Studio. All rights reserved</p>
-          <small>Brought to you by TrustOne</small>
-          <div className="footerX">X</div>
+          <a className="footerTelegram" href="https://t.me/trustone_revenue" target="_blank" rel="noreferrer">
+            Telegram: @trustone_revenue
+          </a>
+          <form className="footerForm" onSubmit={(event) => event.preventDefault()}>
+            <input type="text" placeholder="Ваш Telegram или телефон" aria-label="Контакт для пилота" />
+            <button type="submit">{CTA_PRIMARY}</button>
+          </form>
+          <p>© 2026 TrustOne. All rights reserved</p>
+          <small>Revenue layer for messenger sales</small>
         </div>
       </footer>
     </div>
   );
 }
-
-
