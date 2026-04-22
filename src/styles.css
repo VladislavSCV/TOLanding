@@ -210,6 +210,7 @@ input {
 
 .flowGrid,
 .benefitsGrid,
+.nextGrowthGrid,
 .approachGrid,
 .pricingGrid {
   margin-top: 24px;
@@ -273,6 +274,10 @@ input {
 
 .benefitsGrid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.nextGrowthGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .benefitCard {
@@ -700,13 +705,6 @@ input {
   color: #45454a;
 }
 
-.trustExtra {
-  margin: 12px 0 0;
-  color: #4d4d53;
-  font-size: clamp(0.95rem, 1.02vw, 1.06rem);
-  line-height: 1.34;
-}
-
 .faqSection {
   padding-bottom: 8px;
 }
@@ -870,6 +868,7 @@ input {
 
   .flowGrid,
   .benefitsGrid,
+  .nextGrowthGrid,
   .approachGrid,
   .pricingGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -908,6 +907,7 @@ input {
 
   .flowGrid,
   .benefitsGrid,
+  .nextGrowthGrid,
   .proofGrid,
   .featureColumns,
   .approachGrid,
