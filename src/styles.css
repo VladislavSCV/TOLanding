@@ -518,6 +518,24 @@ input {
   gap: 6px;
 }
 
+.priceHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.priceBadge {
+  border-radius: 999px;
+  border: 1px solid #b9b9c0;
+  background: #f6f6f8;
+  color: #1f2025;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
 .priceCard.dark {
   background: #222328;
   color: #fff;
@@ -555,6 +573,12 @@ input {
 .priceCard.dark .priceAudience,
 .priceCard.dark li {
   color: rgba(255, 255, 255, 0.82);
+}
+
+.priceCard.dark .priceBadge {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
 }
 
 .priceCard.dark li::before {
@@ -928,6 +952,14 @@ input {
 
   .priceAudience {
     min-height: 0;
+  }
+
+  .priceHead {
+    align-items: center;
+  }
+
+  .priceBadge {
+    white-space: normal;
   }
 
   .founderVisual {
